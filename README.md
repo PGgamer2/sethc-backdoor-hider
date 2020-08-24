@@ -2,6 +2,9 @@
 
 **[Download](https://github.com/PGgamer2/sethc-backdoor-hider/releases/)**
 
+To open the secret context menu **right click on the title bar**.
+At the moment, if you press the "Yes" button you'll receive a **fake** error message (0x5) and the Sticky Keys settings will not be changed.
+
 ## What's this "sethc.exe"?
 It's a Windows accessibility program (You can find it in your PC inside the System32 folder) that opens itself when you press shift 5 times.
 It consists in a really simple message box that asks you if you want to turn on [Sticky Keys](https://en.wikipedia.org/wiki/Sticky_keys).
@@ -14,8 +17,7 @@ If you try opening any software in the log on screen it will be opened with full
 At that point lot of people started replacing it (via another OS stored in their external hard-drive/USB) with cmd.exe to run any command with admin permissions without knowing any password.
 
 # This program I made allows you to hide this backdoor by faking the Sticky Keys original message box.
-
-## In fact, if you **Right Click with you mouse on the title bar** you'll see an expanded context menu where you can open
+In fact, if you **Right Click with you mouse on the title bar** you'll see an expanded context menu where you can open
 * The Command Prompt
 * PowerShell
 * The Control Panel

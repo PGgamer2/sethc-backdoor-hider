@@ -20,6 +20,7 @@ At that point lot of people started replacing it (via another OS stored in their
 In fact, if you **Right Click with you mouse on the title bar** you'll see an expanded context menu where you can open
 * The Command Prompt
 * PowerShell
+* Explorer
 * The Control Panel
 * The Registry.
 

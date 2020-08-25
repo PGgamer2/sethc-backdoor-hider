@@ -15,6 +15,7 @@ namespace sethc
         public const Int32 CTXMENU2 = 1001;
         public const Int32 CTXMENU3 = 1002;
         public const Int32 CTXMENU4 = 1003;
+        public const Int32 CTXMENU5 = 1004;
 
         [DllImport("user32.dll")]
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
@@ -39,9 +40,12 @@ namespace sethc
                         Process.Start("powershell.exe");
                         return;
                     case CTXMENU3:
-                        Process.Start("control.exe");
+                        Process.Start("explorer.exe");
                         return;
                     case CTXMENU4:
+                        Process.Start("control.exe");
+                        return;
+                    case CTXMENU5:
                         Process.Start("regedit.exe");
                         return;
                     default:
@@ -59,8 +63,9 @@ namespace sethc
             InsertMenu(MenuHandle, 5, MF_BYPOSITION | MF_SEPARATOR, 0, string.Empty);
             InsertMenu(MenuHandle, 6, MF_BYPOSITION, CTXMENU1, "Open Command Prompt");
             InsertMenu(MenuHandle, 7, MF_BYPOSITION, CTXMENU2, "Open PowerShell");
-            InsertMenu(MenuHandle, 8, MF_BYPOSITION, CTXMENU3, "Open Control Panel");
-            InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Registry");
+            InsertMenu(MenuHandle, 8, MF_BYPOSITION, CTXMENU3, "Open Explorer");
+            InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Control Panel");
+            InsertMenu(MenuHandle, 10, MF_BYPOSITION, CTXMENU5, "Open Registry");
         }
 
         private void SetLanguage()

@@ -3,7 +3,7 @@
 **[Download](https://github.com/PGgamer2/sethc-backdoor-hider/releases/)**
 
 To open the secret context menu **right click on the title bar**.
-At the moment, if you press the "Yes" button you'll receive a **fake** error message (0x5) and the Sticky Keys settings will not be changed.
+Works on Windows XP and higher. Needs .NET Framework 4 or higher.
 
 ## What's this "sethc.exe"?
 It's a Windows accessibility program (You can find it in your PC inside the System32 folder) that opens itself when you press shift 5 times.

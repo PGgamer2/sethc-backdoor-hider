@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -40,7 +41,10 @@ namespace sethc
                         Process.Start("cmd.exe");
                         return;
                     case CTXMENU2:
-                        Process.Start("powershell.exe");
+                        if (Directory.Exists(@"C:\Windows\System32\WindowsPowerShell"))
+                            Process.Start("powershell.exe");
+                        else
+                            MessageBox.Show("This Windows version doesn't have a\nC:\\Windows\\System32\\WindowsPowerShell folder.", AppDomain.CurrentDomain.FriendlyName);
                         return;
                     case CTXMENU3:
                         Process.Start("explorer.exe");
@@ -70,9 +74,6 @@ namespace sethc
             InsertMenu(MenuHandle, 8, MF_BYPOSITION, CTXMENU3, "Open Explorer");
             InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Control Panel");
             InsertMenu(MenuHandle, 10, MF_BYPOSITION, CTXMENU5, "Open Registry");
-
-            if (!isLoggedOn()) // If user isn't logged remove the 'Go to Ease of Access Center' label
-                labeldeactivatedialog.Enabled = false;
         }
 
         private void SetLanguage()
@@ -108,7 +109,23 @@ namespace sethc
         private void labeldeactivatedialog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Open settings
-            Process.Start("ms-settings:easeofaccess-keyboard");
+            try
+            {
+                Process.Start("ms-settings:easeofaccess-keyboard");
+            }
+            catch (Exception error)
+            {
+                // Get error code
+                int code = 1;
+                var w32ex = error as Win32Exception;
+                if (w32ex == null)
+                    w32ex = error.InnerException as Win32Exception;
+                if (w32ex != null)
+                    code = w32ex.ErrorCode;
+
+                MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(code);
+            }
             Application.Exit();
         }
 
@@ -139,22 +156,10 @@ namespace sethc
                     code = w32ex.ErrorCode;
 
                 MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}: {error}\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                if (isLoggedOn()) // If user is logged open Windows settings
-                    Process.Start("ms-settings:easeofaccess-keyboard");
                 Environment.Exit(code);
             }
 
             Application.Exit();
-        }
-
-        public bool isLoggedOn()
-        {
-            // Check if user is logged by looking for the winlogon process
-            Process[] pname = Process.GetProcessesByName("winlogon");
-            if (pname.Length == 0)
-                return false;
-            else
-                return true;
         }
     }
 }

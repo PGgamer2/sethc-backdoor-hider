@@ -66,6 +66,9 @@ namespace sethc
             InsertMenu(MenuHandle, 8, MF_BYPOSITION, CTXMENU3, "Open Explorer");
             InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Control Panel");
             InsertMenu(MenuHandle, 10, MF_BYPOSITION, CTXMENU5, "Open Registry");
+
+            if (!isLoggedOn())
+                labeldeactivatedialog.Enabled = false;
         }
 
         private void SetLanguage()
@@ -84,7 +87,7 @@ namespace sethc
                     turnsktext = "Attivare Tasti permanenti?";
                     skcontenttext = "Tasti permanenti consente di utilizzare combinazioni di tasti con MAIUSC, CTRL, ALT o il tasto logo Windows premendo un tasto alla volta. Per attivare Tasti permanenti, premere MAIUSC cinque volte.";
                     deactivatesktext = "Disabilita questa scelta rapida da tastiera nelle impostazioni della tastiera di Accesso Rapido";
-                    skyes = "&Si";
+                    skyes = "&Sì";
                     break;
             }
 
@@ -110,9 +113,19 @@ namespace sethc
 
         private void buttonYes_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}, ERROR_ACCESS_DENIED (0x5).\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Process.Start("ms-settings:easeofaccess-keyboard");
-            Environment.Exit(5);
+            MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}, ERROR_BAD_COMMAND (0x16).\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (isLoggedOn())
+                Process.Start("ms-settings:easeofaccess-keyboard");
+            Environment.Exit(22);
+        }
+
+        public bool isLoggedOn()
+        {
+            Process[] pname = Process.GetProcessesByName("winlogon");
+            if (pname.Length == 0)
+                return false;
+            else
+                return true;
         }
     }
 }

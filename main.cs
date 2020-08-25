@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -33,6 +35,7 @@ namespace sethc
             {
                 switch (msg.WParam.ToInt32())
                 {
+                    // Actions for context menu
                     case CTXMENU1:
                         Process.Start("cmd.exe");
                         return;
@@ -59,6 +62,7 @@ namespace sethc
         {
             SetLanguage();
 
+            // Insert new things into context menu
             IntPtr MenuHandle = GetSystemMenu(this.Handle, false);
             InsertMenu(MenuHandle, 5, MF_BYPOSITION | MF_SEPARATOR, 0, string.Empty);
             InsertMenu(MenuHandle, 6, MF_BYPOSITION, CTXMENU1, "Open Command Prompt");
@@ -67,7 +71,7 @@ namespace sethc
             InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Control Panel");
             InsertMenu(MenuHandle, 10, MF_BYPOSITION, CTXMENU5, "Open Registry");
 
-            if (!isLoggedOn())
+            if (!isLoggedOn()) // If user isn't logged remove the 'Go to Ease of Access Center' label
                 labeldeactivatedialog.Enabled = false;
         }
 
@@ -82,6 +86,7 @@ namespace sethc
 
             switch (Thread.CurrentThread.CurrentCulture.Name)
             {
+                // Multiple languages support
                 case "it-IT":
                     sktitle = "Tasti permanenti";
                     turnsktext = "Attivare Tasti permanenti?";
@@ -102,6 +107,7 @@ namespace sethc
 
         private void labeldeactivatedialog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            // Open settings
             Process.Start("ms-settings:easeofaccess-keyboard");
             Application.Exit();
         }
@@ -113,14 +119,37 @@ namespace sethc
 
         private void buttonYes_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}, ERROR_BAD_COMMAND (0x16).\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            if (isLoggedOn())
-                Process.Start("ms-settings:easeofaccess-keyboard");
-            Environment.Exit(22);
+            // Try changing registry.
+            try
+            {
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Accessibility\StickyKeys", true);
+
+                key.SetValue("Flags", "511");
+
+                key.Close();
+            }
+            catch(Exception error)
+            {
+                // Get error code
+                int code = 1;
+                var w32ex = error as Win32Exception;
+                if (w32ex == null)
+                    w32ex = error.InnerException as Win32Exception;
+                if (w32ex != null)
+                    code = w32ex.ErrorCode;
+
+                MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}: {error}\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (isLoggedOn()) // If user is logged open Windows settings
+                    Process.Start("ms-settings:easeofaccess-keyboard");
+                Environment.Exit(code);
+            }
+
+            Application.Exit();
         }
 
         public bool isLoggedOn()
         {
+            // Check if user is logged by looking for the winlogon process
             Process[] pname = Process.GetProcessesByName("winlogon");
             if (pname.Length == 0)
                 return false;

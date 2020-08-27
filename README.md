@@ -17,7 +17,7 @@ If you try opening any software in the log on screen it will be opened with full
 At that point lot of people started replacing it (via another OS stored in their external hard-drive/USB) with cmd.exe to run any command with admin permissions without knowing any password.
 
 # This program I made allows you to hide this backdoor by faking the Sticky Keys original message box.
-In fact, if you **Right Click with you mouse on the title bar** you'll see an expanded context menu where you can open
+In fact, if you **right click with your mouse on the title bar** you'll see an expanded context menu where you can open
 * The Command Prompt
 * PowerShell
 * Explorer

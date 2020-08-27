@@ -28,10 +28,10 @@
             // labelskcontent
             // 
             this.labelskcontent.AutoEllipsis = true;
-            this.labelskcontent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelskcontent.Location = new System.Drawing.Point(33, 39);
+            this.labelskcontent.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.labelskcontent.Location = new System.Drawing.Point(35, 43);
             this.labelskcontent.Name = "labelskcontent";
-            this.labelskcontent.Size = new System.Drawing.Size(420, 39);
+            this.labelskcontent.Size = new System.Drawing.Size(445, 45);
             this.labelskcontent.TabIndex = 1;
             this.labelskcontent.Text = "Sticky Keys lets you use the SHIFT, CTRL, ALT, or Windows Logo keys by pressing o" +
     "ne key at a time. The keyboard shortcut to turn on Sticky Keys is to press the S" +
@@ -40,16 +40,17 @@
             // labelturnsk
             // 
             this.labelturnsk.AutoSize = true;
-            this.labelturnsk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelturnsk.Location = new System.Drawing.Point(12, 17);
+            this.labelturnsk.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.labelturnsk.Location = new System.Drawing.Point(12, 21);
             this.labelturnsk.Name = "labelturnsk";
-            this.labelturnsk.Size = new System.Drawing.Size(179, 13);
+            this.labelturnsk.Size = new System.Drawing.Size(196, 15);
             this.labelturnsk.TabIndex = 0;
             this.labelturnsk.Text = "Do you want to turn on Sticky Keys?";
             // 
             // buttonYes
             // 
-            this.buttonYes.Location = new System.Drawing.Point(304, 137);
+            this.buttonYes.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.buttonYes.Location = new System.Drawing.Point(304, 141);
             this.buttonYes.Name = "buttonYes";
             this.buttonYes.Size = new System.Drawing.Size(70, 23);
             this.buttonYes.TabIndex = 3;
@@ -59,7 +60,8 @@
             // 
             // buttonNo
             // 
-            this.buttonNo.Location = new System.Drawing.Point(385, 137);
+            this.buttonNo.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.buttonNo.Location = new System.Drawing.Point(385, 141);
             this.buttonNo.Name = "buttonNo";
             this.buttonNo.Size = new System.Drawing.Size(75, 23);
             this.buttonNo.TabIndex = 4;
@@ -69,17 +71,18 @@
             // 
             // labeldeactivatedialog
             // 
-            this.labeldeactivatedialog.ActiveLinkColor = System.Drawing.Color.Blue;
+            this.labeldeactivatedialog.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(90)))), ((int)(((byte)(255)))));
             this.labeldeactivatedialog.AutoEllipsis = true;
+            this.labeldeactivatedialog.Font = new System.Drawing.Font("Segoe UI", 8.5F);
             this.labeldeactivatedialog.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.labeldeactivatedialog.LinkColor = System.Drawing.Color.Blue;
-            this.labeldeactivatedialog.Location = new System.Drawing.Point(33, 96);
+            this.labeldeactivatedialog.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(90)))), ((int)(((byte)(255)))));
+            this.labeldeactivatedialog.Location = new System.Drawing.Point(35, 102);
             this.labeldeactivatedialog.Name = "labeldeactivatedialog";
-            this.labeldeactivatedialog.Size = new System.Drawing.Size(420, 13);
+            this.labeldeactivatedialog.Size = new System.Drawing.Size(450, 15);
             this.labeldeactivatedialog.TabIndex = 2;
             this.labeldeactivatedialog.TabStop = true;
             this.labeldeactivatedialog.Text = "Go to the Ease of Access Center to disable the keyboard shortcut";
-            this.labeldeactivatedialog.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.labeldeactivatedialog.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(90)))), ((int)(((byte)(255)))));
             this.labeldeactivatedialog.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.labeldeactivatedialog_LinkClicked);
             // 
             // main
@@ -87,15 +90,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(500, 176);
+            this.ClientSize = new System.Drawing.Size(500, 181);
             this.Controls.Add(this.labeldeactivatedialog);
             this.Controls.Add(this.buttonNo);
             this.Controls.Add(this.buttonYes);
             this.Controls.Add(this.labelskcontent);
             this.Controls.Add(this.labelturnsk);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.5F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Location = new System.Drawing.Point(100, 100);
+            this.Location = new System.Drawing.Point(105, 100);
             this.MaximizeBox = false;
             this.Name = "main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;

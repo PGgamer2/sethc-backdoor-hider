@@ -10,11 +10,10 @@ It's a Windows accessibility program (You can find it in your PC inside the Syst
 It consists in a really simple message box that asks you if you want to turn on [Sticky Keys](https://en.wikipedia.org/wiki/Sticky_keys).
 
 ## What is this backdoor and how does it work?
-You can open this program EVERYWHERE, even in the **log on screen** thanks to his "5 time shift" functionality.
-So, if you replace it with another program, you can open *that* program everywhere.
-If you try opening any software in the log on screen it will be opened with full admin rights because Windows isn't yet logged to any user.
-
-At that point lot of people started replacing it (via another OS stored in their external hard-drive/USB) with cmd.exe to run any command with admin permissions without knowing any password.
+Windows contains a feature called stick keys, which is an accessibility feature to help Windows users who have physical disabilities.
+It essentially serializes keystrokes instead of pressing multiple keys at a time, so it allows the user to press and release a modifier key, such as Shift, Ctrl, Alt, or the Windows key, and have it remain active until any other key is pressed.
+You activate stick keys by pressing the Shift key 5 times. When you activate stick keys, you are launching a file, C:\Windows\System32\sethc.exe, which executes as SYSTEM.
+This is made into a backdoor by replacing the sethc.exe file with cmd.exe (renamed as sethc.exe). When you do this, you can activate sticky keys at the login prompt and you will get a SYSTEM command prompt.
 
 # This program I made allows you to hide this backdoor by faking the Sticky Keys original message box.
 In fact, if you **right click with your mouse on the title bar** you'll see an expanded context menu where you can open

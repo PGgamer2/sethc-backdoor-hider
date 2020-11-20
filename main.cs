@@ -11,6 +11,12 @@ namespace sethc
 {
     public partial class main : Form
     {
+        public const Int32 SPI_SETSTICKYKEYS = 0x003B;
+        public const Int32 SPIF_UPDATEINIFILE = 0x01;
+        public const Int32 SPIF_SENDWININICHANGE = 0x02;
+        public const UInt32 SKF_STICKYKEYSON = 0x00000001;
+        public const UInt32 SKF_HOTKEYACTIVE = 0x00000004;
+
         public const Int32 WM_SYSCOMMAND = 0x112;
         public const Int32 MF_BYPOSITION = 0x400;
         public const Int32 MF_SEPARATOR = 0x800;
@@ -24,6 +30,14 @@ namespace sethc
         private static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
         [DllImport("user32.dll")]
         private static extern bool InsertMenu(IntPtr hMenu, Int32 wPosition, Int32 wFlags, Int32 wIDNewItem, string lpNewItem);
+        [DllImport("user32.dll")]
+        private static extern bool SystemParametersInfoA(Int32 uiAction, Int32 uiParam, IntPtr pvParam, Int32 fWinIni);
+        [StructLayout(LayoutKind.Sequential)]
+        private struct tagSTICKYKEYS
+        {
+            public Int32 cbSize;
+            public UInt32 dwFlags;
+        }
 
         public main()
         {
@@ -34,29 +48,36 @@ namespace sethc
         {
             if (msg.Msg == WM_SYSCOMMAND)
             {
-                switch (msg.WParam.ToInt32())
+                try
                 {
-                    // Actions for context menu
-                    case CTXMENU1:
-                        Process.Start("cmd.exe");
-                        return;
-                    case CTXMENU2:
-                        if (Directory.Exists(@"C:\Windows\System32\WindowsPowerShell"))
-                            Process.Start("powershell.exe");
-                        else
-                            MessageBox.Show("This Windows version doesn't have a\nC:\\Windows\\System32\\WindowsPowerShell folder.", AppDomain.CurrentDomain.FriendlyName);
-                        return;
-                    case CTXMENU3:
-                        Process.Start("explorer.exe");
-                        return;
-                    case CTXMENU4:
-                        Process.Start("control.exe");
-                        return;
-                    case CTXMENU5:
-                        Process.Start("regedit.exe");
-                        return;
-                    default:
-                        break;
+                    switch (msg.WParam.ToInt32())
+                    {
+                        // Actions for context menu
+                        case CTXMENU1:
+                            Process.Start("cmd.exe");
+                            return;
+                        case CTXMENU2:
+                            if (Directory.Exists(@"C:\Windows\System32\WindowsPowerShell"))
+                                Process.Start("powershell.exe");
+                            else
+                                MessageBox.Show("This Windows version doesn't have a\nC:\\Windows\\System32\\WindowsPowerShell folder.", AppDomain.CurrentDomain.FriendlyName);
+                            return;
+                        case CTXMENU3:
+                            Process.Start("explorer.exe");
+                            return;
+                        case CTXMENU4:
+                            Process.Start("control");
+                            return;
+                        case CTXMENU5:
+                            Process.Start("regedit.exe");
+                            return;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception error)
+                {
+                    Console.WriteLine($"Cannot open process: {error}");
                 }
             }
             base.WndProc(ref msg);
@@ -66,7 +87,7 @@ namespace sethc
         {
             SetLanguage();
 
-            // Insert new things into context menu
+            // Insert new items into context menu
             IntPtr MenuHandle = GetSystemMenu(this.Handle, false);
             InsertMenu(MenuHandle, 5, MF_BYPOSITION | MF_SEPARATOR, 0, string.Empty);
             InsertMenu(MenuHandle, 6, MF_BYPOSITION, CTXMENU1, "Open Command Prompt");
@@ -78,6 +99,7 @@ namespace sethc
 
         private void SetLanguage()
         {
+            // Default language (English)
             string sktitle = "Sticky Keys";
             string turnsktext = "Do you want to turn on Sticky Keys?";
             string skcontenttext = "Sticky Keys lets you use the SHIFT, CTRL, ALT, or Windows Logo keys by pressing one key at a time. The keyboard shortcut to turn on Sticky Keys is to press the SHIFT key 5 times.";
@@ -115,14 +137,14 @@ namespace sethc
             }
             catch (Exception error)
             {
-                // Get error code
-                int code = 1;
-                var w32ex = error as Win32Exception;
-                if (w32ex == null)
-                    w32ex = error.InnerException as Win32Exception;
-                if (w32ex != null)
-                    code = w32ex.ErrorCode;
+                if (error is Win32Exception || error is ObjectDisposedException)
+                {
+                    Process.Start("control");
+                    Application.Exit();
+                    return;
+                }
 
+                int code = GetErrorCode(error);
                 MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(code);
             }
@@ -136,30 +158,37 @@ namespace sethc
 
         private void buttonYes_Click(object sender, EventArgs e)
         {
-            // Try changing registry.
+            // Try to enable sticky keys
             try
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Accessibility\StickyKeys", true);
-
-                key.SetValue("Flags", "511");
-
-                key.Close();
+                tagSTICKYKEYS stk;
+                stk.dwFlags = SKF_STICKYKEYSON | SKF_HOTKEYACTIVE;
+                stk.cbSize = Marshal.SizeOf(typeof(tagSTICKYKEYS));
+                IntPtr pObj = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(tagSTICKYKEYS)));
+                Marshal.StructureToPtr(stk, pObj, false);
+                SystemParametersInfoA(SPI_SETSTICKYKEYS, 0, pObj,
+                    SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                Marshal.FreeHGlobal(pObj);
             }
             catch(Exception error)
             {
-                // Get error code
-                int code = 1;
-                var w32ex = error as Win32Exception;
-                if (w32ex == null)
-                    w32ex = error.InnerException as Win32Exception;
-                if (w32ex != null)
-                    code = w32ex.ErrorCode;
-
+                int code = GetErrorCode(error);
                 MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}: {error}\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(code);
             }
 
             Application.Exit();
+        }
+
+        private int GetErrorCode(Exception error)
+        {
+            int code = 1;
+            var w32ex = error as Win32Exception;
+            if (w32ex == null)
+                w32ex = error.InnerException as Win32Exception;
+            if (w32ex != null)
+                code = w32ex.ErrorCode;
+            return code;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace sethc.exe
@@ -13,6 +12,12 @@ namespace sethc.exe
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Don't open the program if the process already exists
+            string thisprocessname = Process.GetCurrentProcess().ProcessName;
+            if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)
+                return;
+
             Application.Run(new main());
         }
     }

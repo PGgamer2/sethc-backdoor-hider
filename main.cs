@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
@@ -170,7 +169,7 @@ namespace sethc
                     SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                 Marshal.FreeHGlobal(pObj);
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 int code = GetErrorCode(error);
                 MessageBox.Show($"Cannot change settings from {AppDomain.CurrentDomain.FriendlyName}: {error}\nThe current user will have to manually change the settings.", AppDomain.CurrentDomain.FriendlyName + " - Cannot change settings", MessageBoxButtons.OK, MessageBoxIcon.Error);

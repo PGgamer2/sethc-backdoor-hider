@@ -114,7 +114,7 @@ namespace sethc
                     turnsktext = "Attivare Tasti permanenti?";
                     skcontenttext = "Tasti permanenti consente di utilizzare combinazioni di tasti con MAIUSC, CTRL, ALT o il tasto logo Windows premendo un tasto alla volta. Per attivare Tasti permanenti, premere MAIUSC cinque volte.";
                     deactivatesktext = "Disabilita questa scelta rapida da tastiera nelle impostazioni della tastiera di Accesso Rapido";
-                    skyes = "&Sì"; 
+                    skyes = "&Sì";
                     // Italian "No" is written in the same way of English "No"
                     break;
                 case "zh-CN":
@@ -143,19 +143,22 @@ namespace sethc
             {
                 Process.Start("ms-settings:easeofaccess-keyboard");
             }
-            catch (Exception error)
+            catch (Exception)
             {
-                if (error is Win32Exception || error is ObjectDisposedException)
+                try
                 {
                     Process.Start("control");
                     Application.Exit();
                     return;
                 }
-
-                int code = GetErrorCode(error);
-                MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(code);
+                catch (Exception error)
+                {
+                    int code = GetErrorCode(error);
+                    MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Environment.Exit(code);
+                }
             }
+
             Application.Exit();
         }
 
@@ -172,8 +175,10 @@ namespace sethc
                 tagSTICKYKEYS stk;
                 stk.dwFlags = SKF_STICKYKEYSON | SKF_HOTKEYACTIVE;
                 stk.cbSize = Marshal.SizeOf(typeof(tagSTICKYKEYS));
+                // Convert struct to IntPtr
                 IntPtr pObj = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(tagSTICKYKEYS)));
                 Marshal.StructureToPtr(stk, pObj, false);
+                // Set Sticky Keys settings
                 SystemParametersInfoA(SPI_SETSTICKYKEYS, 0, pObj,
                     SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                 Marshal.FreeHGlobal(pObj);

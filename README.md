@@ -1,6 +1,6 @@
 # sethc.exe Backdoor Hider
 
-![Modified version of the original icon of the sethc.exe file](https://raw.githubusercontent.com/PGgamer2/sethc-backdoor-hider/master/icon.ico)
+![Modified icon from sethc.exe](https://raw.githubusercontent.com/PGgamer2/sethc-backdoor-hider/master/icon.ico)
 
 **[Download](https://github.com/PGgamer2/sethc-backdoor-hider/releases/)**
 
@@ -23,6 +23,6 @@ In fact, if you **right click with your mouse on the title bar** you'll see a sl
 
 ---
 
-At the moment there are only two languages: English and italian...
+At the moment there are only two languages: English, Italian and Chinese...
 
 But YOU can help me translating this program! Just modify the SetLanguage() function in the main.cs file and send me a pull request.

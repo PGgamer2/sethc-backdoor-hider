@@ -115,7 +115,7 @@ namespace sethc
                     skcontenttext = "Tasti permanenti consente di utilizzare combinazioni di tasti con MAIUSC, CTRL, ALT o il tasto logo Windows premendo un tasto alla volta. Per attivare Tasti permanenti, premere MAIUSC cinque volte.";
                     deactivatesktext = "Disabilita questa scelta rapida da tastiera nelle impostazioni della tastiera di Accesso Rapido";
                     skyes = "&Sì"; 
-                    // here missed no option?
+                    // Italian "No" is written in the same way of English "No"
                     break;
                 case "zh-CN":
                     sktitle = "粘滞键";

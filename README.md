@@ -21,8 +21,11 @@ In fact, if you **right click with your mouse on the title bar** you'll see a sl
 * The Control Panel
 * The Registry.
 
----
+# Localization
 
-At the moment there are only two languages: English, Italian and Chinese...
+At the moment there are only these languages: 
+* English
+* Italian 
+* Chinese
 
 But YOU can help me translating this program! Just modify the SetLanguage() function in the main.cs file and send me a pull request.

@@ -147,15 +147,22 @@ namespace sethc
             {
                 try
                 {
-                    Process.Start("control");
-                    Application.Exit();
-                    return;
+                    ProcessStartInfo skwinxp = new ProcessStartInfo("rundll32.exe");
+                    skwinxp.Arguments = "Shell32.dll,Control_RunDLL access.cpl,,1";
+                    Process.Start(skwinxp);
                 }
-                catch (Exception error)
+                catch (Exception)
                 {
-                    int code = GetErrorCode(error);
-                    MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Environment.Exit(code);
+                    try
+                    {
+                        Process.Start("control");
+                    }
+                    catch (Exception error)
+                    {
+                        int code = GetErrorCode(error);
+                        MessageBox.Show($"Cannot open settings from {AppDomain.CurrentDomain.FriendlyName}:\n{error}", AppDomain.CurrentDomain.FriendlyName + " - Cannot open settings", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Environment.Exit(code);
+                    }
                 }
             }
 

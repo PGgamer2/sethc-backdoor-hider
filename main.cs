@@ -114,7 +114,16 @@ namespace sethc
                     turnsktext = "Attivare Tasti permanenti?";
                     skcontenttext = "Tasti permanenti consente di utilizzare combinazioni di tasti con MAIUSC, CTRL, ALT o il tasto logo Windows premendo un tasto alla volta. Per attivare Tasti permanenti, premere MAIUSC cinque volte.";
                     deactivatesktext = "Disabilita questa scelta rapida da tastiera nelle impostazioni della tastiera di Accesso Rapido";
-                    skyes = "&Sì";
+                    skyes = "&Sì"; 
+                    // here missed no option?
+                    break;
+                case "zh-CN":
+                    sktitle = "粘滞键";
+                    turnsktext = "你想启用粘滞键吗?";
+                    skcontenttext = "通过一次按一个键，粘滞键允许使用 Shift、Ctrl、Alt 或 Windows徽标键。启用粘滞键的键盘快捷方式是按 5 次 Shift 键。";
+                    deactivatesktext = "在“轻松使用”键盘设置中禁用此键盘快捷方式";
+                    skyes = "&是(Y)";
+                    skno = "&否(N)";
                     break;
             }
 

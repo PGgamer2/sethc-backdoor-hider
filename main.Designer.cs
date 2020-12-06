@@ -113,11 +113,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelskcontent;
-        private System.Windows.Forms.Label labelturnsk;
-        private System.Windows.Forms.Button buttonYes;
-        private System.Windows.Forms.Button buttonNo;
-        private System.Windows.Forms.LinkLabel labeldeactivatedialog;
+        public System.Windows.Forms.Label labelskcontent;
+        public System.Windows.Forms.Label labelturnsk;
+        public System.Windows.Forms.Button buttonYes;
+        public System.Windows.Forms.Button buttonNo;
+        public System.Windows.Forms.LinkLabel labeldeactivatedialog;
     }
 }
 

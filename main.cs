@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace sethc
@@ -84,7 +83,7 @@ namespace sethc
 
         private void main_Load(object sender, EventArgs e)
         {
-            SetLanguage();
+            Localization.SetLanguage(this);
 
             // Insert new items into context menu
             IntPtr MenuHandle = GetSystemMenu(this.Handle, false);
@@ -94,46 +93,6 @@ namespace sethc
             InsertMenu(MenuHandle, 8, MF_BYPOSITION, CTXMENU3, "Open Explorer");
             InsertMenu(MenuHandle, 9, MF_BYPOSITION, CTXMENU4, "Open Control Panel");
             InsertMenu(MenuHandle, 10, MF_BYPOSITION, CTXMENU5, "Open Registry");
-        }
-
-        private void SetLanguage()
-        {
-            // Default language (English)
-            string sktitle = "Sticky Keys";
-            string turnsktext = "Do you want to turn on Sticky Keys?";
-            string skcontenttext = "Sticky Keys lets you use the SHIFT, CTRL, ALT, or Windows Logo keys by pressing one key at a time. The keyboard shortcut to turn on Sticky Keys is to press the SHIFT key 5 times.";
-            string deactivatesktext = "Go to the Ease of Access Center to disable the keyboard shortcut";
-            string skyes = "&Yes";
-            string skno = "&No";
-
-            switch (Thread.CurrentThread.CurrentCulture.Name)
-            {
-                // Multiple languages support
-                case "it-IT":
-                    sktitle = "Tasti permanenti";
-                    turnsktext = "Attivare Tasti permanenti?";
-                    skcontenttext = "Tasti permanenti consente di utilizzare combinazioni di tasti con MAIUSC, CTRL, ALT o il tasto logo Windows premendo un tasto alla volta. Per attivare Tasti permanenti, premere MAIUSC cinque volte.";
-                    deactivatesktext = "Disabilita questa scelta rapida da tastiera nelle impostazioni della tastiera di Accesso Rapido";
-                    skyes = "&Sì";
-                    // Italian "No" is written in the same way of English "No"
-                    break;
-                case "zh-CN":
-                    sktitle = "粘滞键";
-                    turnsktext = "你想启用粘滞键吗?";
-                    skcontenttext = "通过一次按一个键，粘滞键允许使用 Shift、Ctrl、Alt 或 Windows徽标键。启用粘滞键的键盘快捷方式是按 5 次 Shift 键。";
-                    deactivatesktext = "在“轻松使用”键盘设置中禁用此键盘快捷方式";
-                    skyes = "&是(Y)";
-                    skno = "&否(N)";
-                    break;
-            }
-
-            this.Text = sktitle;
-            labelturnsk.Text = turnsktext;
-            labelskcontent.Text = skcontenttext;
-            labeldeactivatedialog.Text = deactivatesktext;
-            buttonYes.Text = skyes;
-            buttonNo.Text = skno;
-            Refresh();
         }
 
         private void labeldeactivatedialog_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

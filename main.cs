@@ -55,10 +55,14 @@ namespace sethc
                             Process.Start("cmd.exe");
                             return;
                         case CTXMENU2:
-                            if (Directory.Exists(@"C:\Windows\System32\WindowsPowerShell"))
+                            try
+                            {
                                 Process.Start("powershell.exe");
-                            else
-                                MessageBox.Show("This Windows version doesn't have a\nC:\\Windows\\System32\\WindowsPowerShell folder.", AppDomain.CurrentDomain.FriendlyName);
+                            }
+                            catch (Exception)
+                            {
+                                MessageBox.Show("PowerShell isn't installed.", AppDomain.CurrentDomain.FriendlyName);
+                            }
                             return;
                         case CTXMENU3:
                             Process.Start("explorer.exe");

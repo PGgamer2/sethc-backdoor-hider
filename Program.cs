@@ -13,7 +13,7 @@ namespace sethc.exe
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            // Don't open the program if the process already exists
+            // Don't open the window if the process already exists
             string thisprocessname = Process.GetCurrentProcess().ProcessName;
             if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)
                 return;

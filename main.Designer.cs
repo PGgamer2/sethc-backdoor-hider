@@ -1,6 +1,6 @@
 ﻿namespace sethc
 {
-    partial class main
+    partial class Main
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -13,11 +13,11 @@
             base.Dispose(disposing);
         }
 
-        #region main.cs Design
+        #region Main.cs Design
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.labelskcontent = new System.Windows.Forms.Label();
             this.labelturnsk = new System.Windows.Forms.Label();
             this.buttonYes = new System.Windows.Forms.Button();

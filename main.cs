@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace sethc
 {
-    public partial class main : Form
+    public partial class Main : Form
     {
         public const Int32 SPI_SETSTICKYKEYS = 0x003B;
         public const Int32 SPIF_UPDATEINIFILE = 0x01;
@@ -37,7 +37,7 @@ namespace sethc
             public UInt32 dwFlags;
         }
 
-        public main()
+        public Main()
         {
             InitializeComponent();
         }

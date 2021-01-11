@@ -4,7 +4,7 @@ namespace sethc
 {
     public class Localization
     {
-        public static void SetLanguage(main mainForm)
+        public static void SetLanguage(Main mainForm)
         {
             // English (Default language)
             string sktitle = "Sticky Keys";

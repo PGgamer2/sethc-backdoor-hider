@@ -18,7 +18,7 @@ namespace sethc.exe
             if (Process.GetProcesses().Count(p => p.ProcessName == thisprocessname) > 1)
                 return;
 
-            Application.Run(new main());
+            Application.Run(new Main());
         }
     }
 }

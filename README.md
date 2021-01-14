@@ -5,7 +5,7 @@
 **[Download](https://github.com/PGgamer2/sethc-backdoor-hider/releases/)**
 
 To open the modified context menu **right click on the title bar**.
-Works on Windows XP and higher. It needs *.NET Framework 4* or higher.
+Works on Windows XP and higher. It needs [*.NET Framework 4*](https://www.microsoft.com/download/details.aspx?id=17718).
 
 ## What is this backdoor and how does it work?
 Windows contains a feature called [sticky keys](https://en.wikipedia.org/wiki/Sticky_keys), which is an accessibility feature to help Windows users who have physical disabilities.

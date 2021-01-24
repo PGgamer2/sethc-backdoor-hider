@@ -61,14 +61,14 @@ namespace sethc
                             }
                             catch (Exception)
                             {
-                                MessageBox.Show("PowerShell isn't installed.", AppDomain.CurrentDomain.FriendlyName);
+                                MessageBox.Show("PowerShell isn't installed.", AppDomain.CurrentDomain.FriendlyName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                             return;
                         case CTXMENU3:
                             Process.Start("explorer.exe");
                             return;
                         case CTXMENU4:
-                            Process.Start("control");
+                            Process.Start("control.exe");
                             return;
                         case CTXMENU5:
                             Process.Start("regedit.exe");
@@ -85,7 +85,7 @@ namespace sethc
             base.WndProc(ref msg);
         }
 
-        private void main_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             Localization.SetLanguage(this);
 
@@ -118,7 +118,7 @@ namespace sethc
                 {
                     try
                     {
-                        Process.Start("control");
+                        Process.Start("control.exe");
                     }
                     catch (Exception error)
                     {
@@ -149,8 +149,7 @@ namespace sethc
                 IntPtr pObj = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(tagSTICKYKEYS)));
                 Marshal.StructureToPtr(stk, pObj, false);
                 // Set Sticky Keys settings
-                SystemParametersInfoA(SPI_SETSTICKYKEYS, 0, pObj,
-                    SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+                SystemParametersInfoA(SPI_SETSTICKYKEYS, 0, pObj, SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
                 Marshal.FreeHGlobal(pObj);
             }
             catch (Exception error)
@@ -173,5 +172,5 @@ namespace sethc
                 code = w32ex.ErrorCode;
             return code;
         }
-    }
+	}
 }

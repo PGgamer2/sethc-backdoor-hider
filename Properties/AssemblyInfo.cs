@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Accessibility shortcut keys")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mirocoft Corporation")]
-[assembly: AssemblyProduct("Mirocoft® Doors® Operating System")]
+[assembly: AssemblyProduct("Mirocoft® Windoors® Operating System")]
 [assembly: AssemblyCopyright("© Mirocoft Corporation. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
